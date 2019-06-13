@@ -1,10 +1,11 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
+import Vue from "vue";
+import App from "./App.vue";
+import router from "./router";
+import VueCustomElement from "vue-custom-element";
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
-new Vue({
-  router,
-  render: h => h(App)
-}).$mount('#app')
+Vue.use(VueCustomElement);
+
+App.router = router;
+Vue.customElement("vue-widget", App);
