@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import { ref } from "vue";
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <h1 class="">Welcome to our new Portfolio</h1>
   </main>
 </template>
