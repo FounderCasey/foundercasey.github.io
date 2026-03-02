@@ -1,13 +1,372 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
-    <link rel="icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vite App</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+    <title>Casey — Builder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0e0e0e;
+            --surface: #161616;
+            --border: #222;
+            --text: #e8e4df;
+            --text-muted: #706b63;
+            --accent: #c4705a;
+            --accent-dim: #c4705a33;
+            --green: #5a8a6a;
+            --green-dim: #5a8a6a33;
+        }
+
+        body {
+            font-family: 'DM Mono', monospace;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 80px 24px 120px;
+        }
+
+        header {
+            margin-bottom: 72px;
+        }
+
+        h1 {
+            font-family: 'Instrument Serif', serif;
+            font-weight: 400;
+            font-size: 3.2rem;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+
+        h1 em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .intro {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            max-width: 480px;
+            font-weight: 300;
+        }
+
+        .intro a {
+            color: var(--text-muted);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            transition: color 0.2s;
+        }
+
+        .intro a:hover {
+            color: var(--text);
+        }
+
+        section {
+            margin-bottom: 56px;
+        }
+
+        .section-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .project {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+            transition: border-color 0.3s;
+        }
+
+        .project:hover {
+            border-color: #333;
+        }
+
+        .project-left {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .project-name {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.35rem;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+        }
+
+        .project-name a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .project-name a:hover {
+            color: var(--accent);
+        }
+
+        .project-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        .badge {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 4px 10px;
+            border-radius: 99px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .badge-active {
+            color: var(--green);
+            background: var(--green-dim);
+        }
+
+        .badge-archived {
+            color: var(--text-muted);
+            background: #ffffff08;
+        }
+
+        .badge-evolved {
+            color: var(--accent);
+            background: var(--accent-dim);
+        }
+
+        /* Experience */
+        .role {
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+            transition: border-color 0.3s;
+        }
+
+        .role:hover {
+            border-color: #333;
+        }
+
+        .role-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .role-title {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.2rem;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+        }
+
+        .role-period {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .role-company {
+            font-size: 0.75rem;
+            color: var(--accent);
+            font-weight: 400;
+            margin-top: 2px;
+        }
+
+        .role-detail {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            margin-top: 4px;
+        }
+
+        footer {
+            margin-top: 80px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            display: flex;
+            gap: 24px;
+        }
+
+        footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+            text-underline-offset: 3px;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--text);
+            text-decoration: underline;
+        }
+
+        @media (max-width: 520px) {
+            .container { padding: 48px 20px 80px; }
+            h1 { font-size: 2.4rem; }
+            .project { flex-direction: column; gap: 8px; }
+            .role-header { flex-direction: column; gap: 4px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Casey builds <em>things</em></h1>
+            <p class="intro">Founder and engineer. I just love building things. Currently CTO at <a href="https://tryterracotta.com">Terracotta</a> (YC S23) — AI-powered infra automation.</p>
+        </header>
+
+        <section>
+            <div class="section-label">Companies</div>
+
+            <div class="project">
+                <div class="project-left">
+                    <div class="project-name"><a href="https://tryterracotta.com" target="_blank" rel="noopener">Terracotta</a></div>
+                    <div class="project-desc">AI-powered Infrastructure as Code pipeline reviews</div>
+                </div>
+                <span class="badge badge-active">Active</span>
+            </div>
+
+            <div class="project">
+                <div class="project-left">
+                    <div class="project-name">Opsberry</div>
+                    <div class="project-desc">Infrastructure automation</div>
+                </div>
+                <span class="badge badge-evolved">Became Terracotta</span>
+            </div>
+
+            <div class="project">
+                <div class="project-left">
+                    <div class="project-name">Hatchfi</div>
+                    <div class="project-desc">Plaid for crypto — unified API for wallets &amp; exchanges</div>
+                </div>
+                <span class="badge badge-evolved">Pivoted</span>
+            </div>
+
+            <div class="project">
+                <div class="project-left">
+                    <div class="project-name">Monitaur</div>
+                    <div class="project-desc">Datadog for crypto — monitoring &amp; observability</div>
+                </div>
+                <span class="badge badge-archived">2022</span>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-label">Side Projects</div>
+
+            <div class="project">
+                <div class="project-left">
+                    <div class="project-name"><a href="https://changable.ai" target="_blank" rel="noopener">Changable.ai</a></div>
+                    <div class="project-desc">AI-powered changelogs from your GitHub commits</div>
+                </div>
+                <span class="badge badge-active">Active</span>
+            </div>
+
+            <div class="project">
+                <div class="project-left">
+                    <div class="project-name">Apollo</div>
+                    <div class="project-desc">Decentralized marketplace — Gumroad for crypto</div>
+                </div>
+                <span class="badge badge-archived">2021 – 2022</span>
+            </div>
+
+            <div class="project">
+                <div class="project-left">
+                    <div class="project-name">Kivo.so</div>
+                    <div class="project-desc">Link-in-bio with crypto wallet support</div>
+                </div>
+                <span class="badge badge-archived">2022 – 2023</span>
+            </div>
+
+            <div class="project">
+                <div class="project-left">
+                    <div class="project-name">Promoso</div>
+                    <div class="project-desc">AI-generated content for real estate firms</div>
+                </div>
+                <span class="badge badge-archived">2021</span>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-label">Experience</div>
+
+            <div class="role">
+                <div class="role-header">
+                    <div class="role-title">CTO &amp; Co-founder</div>
+                    <div class="role-period">Jan 2023 – Present</div>
+                </div>
+                <div class="role-company">Terracotta AI (YC S23)</div>
+            </div>
+
+            <div class="role">
+                <div class="role-header">
+                    <div class="role-title">Founder &amp; CTO</div>
+                    <div class="role-period">Sep 2021 – Dec 2022</div>
+                </div>
+                <div class="role-company">Hatchfi</div>
+                <div class="role-detail">Pivoted due to regulatory changes — same company became Terracotta</div>
+            </div>
+
+            <div class="role">
+                <div class="role-header">
+                    <div class="role-title">Software Engineer</div>
+                    <div class="role-period">Feb 2021 – May 2022</div>
+                </div>
+                <div class="role-company">Forem</div>
+            </div>
+
+            <div class="role">
+                <div class="role-header">
+                    <div class="role-title">Smart Contract Engineer</div>
+                    <div class="role-period">Sep 2021 – Mar 2022</div>
+                </div>
+                <div class="role-company">Buildspace</div>
+                <div class="role-detail">Taught smart contract development, helped grow from 10k to 120k users</div>
+            </div>
+
+            <div class="role">
+                <div class="role-header">
+                    <div class="role-title">Founder</div>
+                    <div class="role-period">Nov 2018 – Feb 2021</div>
+                </div>
+                <div class="role-company">Dash Web Design</div>
+            </div>
+
+            <div class="role">
+                <div class="role-header">
+                    <div class="role-title">Head of Customer Support</div>
+                    <div class="role-period">Aug 2017 – Jun 2018</div>
+                </div>
+                <div class="role-company">Farmstead (YC backed)</div>
+            </div>
+        </section>
+
+        <footer>
+            <a href="https://github.com/FounderCasey">GitHub</a>
+            <a href="https://x.com/ioscasey">Twitter</a>
+        </footer>
+    </div>
+</body>
 </html>
